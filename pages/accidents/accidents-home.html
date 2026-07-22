@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>قسم الحوادث - خطوة أمان</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;800&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/variables.css">
+  <link rel="stylesheet" href="../../css/base.css">
+  <link rel="stylesheet" href="../../css/shell.css">
+  <link rel="stylesheet" href="../../css/components.css">
+  <link rel="stylesheet" href="./accidents.css">
+  <script src="../../js/theme.js"></script>
+</head>
+<body data-page="accidents" data-title="قسم الحوادث">
+  <div class="app-shell">
+    <div id="navRail"></div>
+    <main class="app-frame">
+      <header id="topBar"></header>
+      <div class="app-frame__inner">
+
+        <div class="tabs">
+          <button class="tab is-active" data-tab="videos">فيديوهات</button>
+          <button class="tab" data-tab="stories">قصص حقيقية</button>
+          <button class="tab" data-tab="tips">نصائح</button>
+          <button class="tab" data-tab="stats">إحصائيات</button>
+        </div>
+
+        <section class="tab-panel is-active" data-panel="videos">
+          <a href="./content-detail.html?type=video&id=1" class="card content-card">
+            <div class="content-card__thumb">🎬</div>
+            <div class="content-card__info">
+              <h3>ثانية واحدة غيّرت كل شيء</h3>
+              <span class="badge badge-primary">3:24 دقيقة</span>
+            </div>
+          </a>
+          <a href="./content-detail.html?type=video&id=2" class="card content-card">
+            <div class="content-card__thumb">🎬</div>
+            <div class="content-card__info">
+              <h3>السرعة لا تغفر الأخطاء</h3>
+              <span class="badge badge-primary">2:10 دقيقة</span>
+            </div>
+          </a>
+        </section>
+
+        <section class="tab-panel" data-panel="stories">
+          <a href="./content-detail.html?type=story&id=1" class="card content-card">
+            <div class="content-card__thumb">📖</div>
+            <div class="content-card__info">
+              <h3>"نجوت لكنني تغيرت للأبد"</h3>
+              <span class="badge badge-accent">قصة ناجٍ</span>
+            </div>
+          </a>
+        </section>
+
+        <section class="tab-panel" data-panel="tips">
+          <details class="tip-item card">
+            <summary>حافظ على مسافة أمان كافية</summary>
+            <p>اترك مسافة لا تقل عن ثانيتين بينك وبين السيارة أمامك لإتاحة وقت رد فعل كافٍ.</p>
+          </details>
+          <details class="tip-item card">
+            <summary>لا تستخدم الهاتف أثناء القيادة</summary>
+            <p>حتى نظرة سريعة قد تعني عدم رؤية خطر مفاجئ على الطريق.</p>
+          </details>
+        </section>
+
+        <section class="tab-panel" data-panel="stats">
+          <div class="stats-grid">
+            <div class="card stat-card">
+              <div class="stat-card__value">40%</div>
+              <div class="stat-card__label">حوادث سببها التهور</div>
+            </div>
+            <div class="card stat-card">
+              <div class="stat-card__value">1.3م</div>
+              <div class="stat-card__label">وفاة سنويًا عالميًا</div>
+            </div>
+            <div class="card stat-card">
+              <div class="stat-card__value">90%</div>
+              <div class="stat-card__label">قابلة للتجنب</div>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </main>
+  </div>
+  <nav id="tabBar"></nav>
+
+  <script src="../../js/storage.js"></script>
+  <script src="../../js/shell.js"></script>
+  <script src="./accidents.js"></script>
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>الرئيسية - خطوة أمان</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;800&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/variables.css">
+  <link rel="stylesheet" href="../../css/base.css">
+  <link rel="stylesheet" href="../../css/shell.css">
+  <link rel="stylesheet" href="../../css/components.css">
+  <link rel="stylesheet" href="./home.css">
+  <script src="../../js/theme.js"></script>
+</head>
+<body data-page="home" data-title="خطوة أمان">
+  <div class="app-shell">
+    <div id="navRail"></div>
+    <main class="app-frame">
+      <header id="topBar"></header>
+      <div class="app-frame__inner">
+
+        <div class="home-greeting">
+          <strong class="home-greeting__name" id="userName">أهلًا 👋</strong>
+          <span class="badge badge-primary" id="pointsBadge">0 نقطة</span>
+        </div>
+
+        <section class="card card-signature stat-banner">
+          <span class="badge">إحصائية هذا الأسبوع</span>
+          <h2>40% من حوادث الطرق سببها التهور أو تعاطي مؤثرات</h2>
+          <p>تعرّف على القصص الحقيقية وكيف تحمي نفسك ومن حولك.</p>
+        </section>
+
+        <h2 class="section-title">الوصول السريع</h2>
+        <div class="grid-fill quick-grid">
+          <a class="card quick-card" href="../addiction/addiction-home.html">
+            <div class="quick-card__icon">🛡️</div>
+            <h3>مكافحة الإدمان</h3>
+            <p>دعم وتوعية</p>
+          </a>
+          <a class="card quick-card" href="../accidents/accidents-home.html">
+            <div class="quick-card__icon">🚦</div>
+            <h3>قسم الحوادث</h3>
+            <p>السلامة المرورية</p>
+          </a>
+          <a class="card quick-card" href="../reporting/report-form.html">
+            <div class="quick-card__icon">📢</div>
+            <h3>إبلاغ سريع</h3>
+            <p>ساهم في السلامة</p>
+          </a>
+          <a class="card quick-card" href="../help/help-map.html">
+            <div class="quick-card__icon">📍</div>
+            <h3>دليل المساعدة</h3>
+            <p>مراكز ودعم</p>
+          </a>
+        </div>
+
+        <a class="card card-signature feature-card" href="../challenges/quiz-list.html">
+          <span class="badge badge-accent">🎯 تحدي اليوم</span>
+          <h3>هل تعرف عدد ساعات تأثير الكافيين على التركيز؟</h3>
+          <span class="btn btn-primary">ابدأ الآن</span>
+        </a>
+
+        <a class="card card-signature feature-card" href="../traffic-signs/traffic-signs.html">
+          <span class="badge badge-primary">🚦 اختبار تفاعلي</span>
+          <h3>اختبر معرفتك بإشارات المرور</h3>
+          <p>هل تعرف معنى كل إشارة؟ اختبر نفسك مع 20 سؤالًا متنوعًا.</p>
+          <span class="btn btn-accent">ابدأ الاختبار</span>
+        </a>
+
+        <div class="card fact-card">
+          <h3>هل تعلم؟</h3>
+          <p id="dailyFact">حزام الأمان يقلل خطر الإصابات الجسيمة في الحوادث.</p>
+        </div>
+
+      </div>
+    </main>
+  </div>
+  <nav id="tabBar"></nav>
+
+  <script src="../../js/storage.js"></script>
+  <script src="../../js/shell.js"></script>
+  <script src="./home.js"></script>
+</body>
+</html>

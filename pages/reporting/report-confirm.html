@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>تم إرسال البلاغ - خطوة أمان</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;800&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/variables.css">
+  <link rel="stylesheet" href="../../css/base.css">
+  <link rel="stylesheet" href="../../css/shell.css">
+  <link rel="stylesheet" href="../../css/components.css">
+  <link rel="stylesheet" href="./reporting.css">
+  <script src="../../js/theme.js"></script>
+</head>
+<body data-page="" data-title="">
+  <div class="app-shell">
+    <div id="navRail"></div>
+    <main class="app-frame">
+      <header id="topBar"></header>
+      <div class="app-frame__inner">
+
+        <div style="text-align:center; padding: var(--space-xl) 0">
+          <div style="font-size:3rem">✅</div>
+          <h1>تم إرسال بلاغك</h1>
+          <p>شكرًا لمساهمتك في جعل الطريق أكثر أمانًا.</p>
+        </div>
+
+        <div class="card report-ref card-signature">
+          <div class="report-ref__row"><span>رقم البلاغ</span><strong id="reportId">#000000</strong></div>
+          <div class="report-ref__row"><span>الحالة</span><span class="badge badge-accent" id="reportStatus">قيد المراجعة</span></div>
+        </div>
+
+        <a class="btn btn-primary" href="./reports-history.html">عرض بلاغاتي</a>
+        <a class="btn btn-outline" href="../home/home.html" style="margin-top: var(--space-sm)">العودة للرئيسية</a>
+
+      </div>
+    </main>
+  </div>
+  <nav id="tabBar"></nav>
+
+  <script src="../../js/storage.js"></script>
+  <script src="../../js/shell.js"></script>
+  <script src="./report-confirm.js"></script>
+</body>
+</html>

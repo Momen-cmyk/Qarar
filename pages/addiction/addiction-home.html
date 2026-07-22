@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>مكافحة الإدمان - خطوة أمان</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;800&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/variables.css">
+  <link rel="stylesheet" href="../../css/base.css">
+  <link rel="stylesheet" href="../../css/shell.css">
+  <link rel="stylesheet" href="../../css/components.css">
+  <link rel="stylesheet" href="../accidents/accidents.css">
+  <link rel="stylesheet" href="./addiction.css">
+  <script src="../../js/theme.js"></script>
+</head>
+<body data-page="addiction" data-title="مكافحة الإدمان">
+  <div class="app-shell">
+    <div id="navRail"></div>
+    <main class="app-frame">
+      <header id="topBar"></header>
+      <div class="app-frame__inner">
+
+        <div class="tabs">
+          <button class="tab is-active" data-tab="awareness">توعية</button>
+          <button class="tab" data-tab="recovery">قصص تعافٍ</button>
+          <button class="tab" data-tab="help">طلب مساعدة</button>
+        </div>
+
+        <section class="tab-panel is-active" data-panel="awareness">
+          <a href="./addiction-detail.html?id=1" class="card content-card">
+            <div class="content-card__thumb">⚠️</div>
+            <div class="content-card__info">
+              <h3>تأثير المؤثرات على ردة فعل السائق</h3>
+              <span class="badge badge-danger">توعية</span>
+            </div>
+          </a>
+          <a href="./addiction-detail.html?id=2" class="card content-card">
+            <div class="content-card__thumb">🚬</div>
+            <div class="content-card__info">
+              <h3>التدخين وصحة الجهاز التنفسي</h3>
+              <span class="badge badge-danger">توعية</span>
+            </div>
+          </a>
+          <a href="./addiction-detail.html?id=3" class="card content-card">
+            <div class="content-card__thumb">💊</div>
+            <div class="content-card__info">
+              <h3>الاستخدام الخاطئ للأدوية وتأثيره على التركيز</h3>
+              <span class="badge badge-danger">توعية</span>
+            </div>
+          </a>
+        </section>
+
+        <section class="tab-panel" data-panel="recovery">
+          <div class="recovery-card card card-signature">
+            <span class="badge badge-success">قصة تعافٍ</span>
+            <h3>"استرجعت حياتي بعد 3 سنوات من العلاج"</h3>
+            <p>قصة شاب تجاوز الإدمان وعاد لحياته الطبيعية بدعم أسرته ومركز علاج متخصص.</p>
+          </div>
+        </section>
+
+        <section class="tab-panel" data-panel="help">
+          <div class="card helpline-card">
+            <div>
+              <h3>الخط الساخن لمكافحة الإدمان</h3>
+              <p>دعم سري ومجاني على مدار الساعة</p>
+            </div>
+            <a class="btn btn-primary" href="tel:16023">اتصال</a>
+          </div>
+          <a class="btn btn-outline" href="../help/support-corner.html">ركن الدعم النفسي ←</a>
+        </section>
+
+      </div>
+    </main>
+  </div>
+  <nav id="tabBar"></nav>
+
+  <script src="../../js/storage.js"></script>
+  <script src="../../js/shell.js"></script>
+  <script src="../accidents/accidents.js"></script>
+</body>
+</html>

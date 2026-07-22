@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ركن الدعم النفسي - خطوة أمان</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;800&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/variables.css">
+  <link rel="stylesheet" href="../../css/base.css">
+  <link rel="stylesheet" href="../../css/shell.css">
+  <link rel="stylesheet" href="../../css/components.css">
+  <link rel="stylesheet" href="./help.css">
+  <script src="../../js/theme.js"></script>
+</head>
+<body data-page="help" data-title="ركن الدعم النفسي" data-back="true">
+  <div class="app-shell">
+    <div id="navRail"></div>
+    <main class="app-frame">
+      <header id="topBar"></header>
+      <div class="app-frame__inner">
+
+        <div class="card">
+          <p>أنت لست وحدك. إذا كنت تشعر أنك أو أحد من تحب معرّض لخطر الإدمان، هناك جهات مستعدة للاستماع والمساعدة دون أي حكم.</p>
+        </div>
+
+        <h2 class="section-title">للفرد</h2>
+        <div class="card helpline-card">
+          <div><h3>الخط الساخن لمكافحة الإدمان</h3><p>دعم سري ومجاني على مدار الساعة</p></div>
+          <a class="btn btn-primary" href="tel:16023">اتصال</a>
+        </div>
+
+        <h2 class="section-title">للأسرة</h2>
+        <div class="card helpline-card">
+          <div><h3>خط دعم الأسر</h3><p>مساعدة الأسر على التعامل مع حالات الإدمان</p></div>
+          <a class="btn btn-primary" href="tel:16328">اتصال</a>
+        </div>
+
+        <h2 class="section-title">كيف تتحدث مع شخص تخاف عليه؟</h2>
+        <details class="tip-item card"><summary>ابدأ بالاستماع لا بالحكم</summary></details>
+        <details class="tip-item card"><summary>اختر الوقت والمكان المناسبين</summary></details>
+
+        <h2 class="section-title">🔒 تواصل بسرية</h2>
+        <form class="card support-form" id="supportForm">
+          <p>لن نطلب اسمك. اكتب رسالتك وسيتم حفظها على جهازك كنموذج أولي آمن.</p>
+          <div class="field">
+            <textarea class="" id="supportMessage" rows="4" required placeholder="كيف يمكننا مساعدتك؟"></textarea>
+          </div>
+          <button class="btn btn-primary" type="submit">إرسال الرسالة</button>
+          <p class="form-feedback" id="supportFeedback" role="status"></p>
+        </form>
+
+        <p class="privacy-note">جميع المعلومات التي تشاركها سرية تمامًا ولا تُستخدم إلا لتقديم الدعم المناسب لك.</p>
+
+      </div>
+    </main>
+  </div>
+  <nav id="tabBar"></nav>
+
+  <script src="../../js/storage.js"></script>
+  <script src="../../js/shell.js"></script>
+  <script src="./support-corner.js"></script>
+</body>
+</html>

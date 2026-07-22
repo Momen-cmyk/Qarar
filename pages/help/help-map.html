@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>دليل المساعدة - خطوة أمان</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;800&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/variables.css">
+  <link rel="stylesheet" href="../../css/base.css">
+  <link rel="stylesheet" href="../../css/shell.css">
+  <link rel="stylesheet" href="../../css/components.css">
+  <link rel="stylesheet" href="./help.css">
+  <script src="../../js/theme.js"></script>
+</head>
+<body data-page="help" data-title="دليل المساعدة">
+  <div class="app-shell">
+    <div id="navRail"></div>
+    <main class="app-frame">
+      <header id="topBar"></header>
+      <div class="app-frame__inner">
+
+        <a class="emergency-bar" href="tel:123">🚨 اتصال بالطوارئ — اضغط هنا</a>
+
+        <div class="tabs">
+          <button class="tab is-active" data-tab="all">الكل</button>
+          <button class="tab" data-tab="hospitals">مستشفيات</button>
+          <button class="tab" data-tab="addiction">مراكز علاج</button>
+          <button class="tab" data-tab="support">دعم نفسي</button>
+        </div>
+
+        <div class="map-placeholder">
+          <span class="map-placeholder__pin">📍</span>
+          خريطة تفاعلية تعرض المراكز القريبة منك
+        </div>
+
+        <div class="help-list">
+          <a href="./center-detail.html?id=1" class="card center-card" data-category="hospitals">
+            <div class="center-card__icon">🏥</div>
+            <div class="center-card__info">
+              <h3>مستشفى الأمل العام</h3>
+              <span class="badge badge-primary">2.3 كم • يعمل 24 ساعة</span>
+            </div>
+          </a>
+          <a href="./center-detail.html?id=2" class="card center-card" data-category="addiction">
+            <div class="center-card__icon">🛡️</div>
+            <div class="center-card__info">
+              <h3>مركز التعافي لعلاج الإدمان</h3>
+              <span class="badge badge-primary">4.1 كم • 9ص - 9م</span>
+            </div>
+          </a>
+          <a href="./center-detail.html?id=3" class="card center-card" data-category="support">
+            <div class="center-card__icon">💬</div>
+            <div class="center-card__info">
+              <h3>مركز الدعم النفسي والاجتماعي</h3>
+              <span class="badge badge-primary">5.0 كم • 9ص - 5م</span>
+            </div>
+          </a>
+        </div>
+
+      </div>
+    </main>
+  </div>
+  <nav id="tabBar"></nav>
+
+  <script src="../../js/storage.js"></script>
+  <script src="../../js/shell.js"></script>
+  <script src="./help.js"></script>
+</body>
+</html>

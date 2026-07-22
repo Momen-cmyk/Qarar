@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>تفاصيل المركز - خطوة أمان</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;800&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/variables.css">
+  <link rel="stylesheet" href="../../css/base.css">
+  <link rel="stylesheet" href="../../css/shell.css">
+  <link rel="stylesheet" href="../../css/components.css">
+  <link rel="stylesheet" href="./help.css">
+  <script src="../../js/theme.js"></script>
+</head>
+<body data-page="help" data-title="" data-back="true">
+  <div class="app-shell">
+    <div id="navRail"></div>
+    <main class="app-frame">
+      <header id="topBar"></header>
+      <div class="app-frame__inner">
+
+        <div class="detail-header">
+          <div class="detail-header__icon" id="centerIcon">🏥</div>
+          <h1 id="centerName">اسم المركز</h1>
+          <span class="badge badge-primary" id="centerType">نوع المركز</span>
+        </div>
+
+        <div class="map-placeholder small">
+          <span class="map-placeholder__pin">📍</span>
+        </div>
+
+        <div class="card">
+          <div class="info-row"><span>العنوان</span><span id="centerAddress"></span></div>
+          <div class="info-row"><span>الهاتف</span><a id="phoneLink" href="#"><span id="centerPhone"></span></a></div>
+          <div class="info-row"><span>مواعيد العمل</span><span id="centerHours"></span></div>
+        </div>
+
+        <p id="centerDescription"></p>
+
+        <div class="detail-actions">
+          <a class="btn btn-primary" id="mainCallBtn" href="#">📞 اتصال</a>
+          <a class="btn btn-outline" id="mapsLink" href="#" target="_blank" rel="noopener">🗺️ الاتجاهات</a>
+        </div>
+        <button class="btn-text" id="shareCenterBtn">↗️ مشاركة بيانات المركز</button>
+
+      </div>
+    </main>
+  </div>
+  <nav id="tabBar"></nav>
+
+  <script src="../../js/storage.js"></script>
+  <script src="../../js/shell.js"></script>
+  <script src="./center-detail.js"></script>
+</body>
+</html>

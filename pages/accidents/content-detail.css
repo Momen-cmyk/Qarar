@@ -1,0 +1,18 @@
+.media-placeholder {
+  height: 220px;
+  border-radius: var(--radius-md);
+  background: var(--color-primary-tint);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3.5rem;
+  margin-bottom: var(--space-lg);
+}
+.content-actions {
+  display: flex;
+  gap: var(--space-lg);
+  margin-top: var(--space-lg);
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--color-border);
+}
+#likeBtn.is-active { color: var(--color-danger); font-weight: var(--fw-bold); }

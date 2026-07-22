@@ -1,0 +1,19 @@
+/* Addiction module — reuses .tabs / .tab-panel / .content-card / .tip-item
+   styles and accidents.js tab logic from the accidents module, since the
+   interaction pattern is identical. Only the recovery-story card is unique
+   to this section. */
+.recovery-card {
+  background: var(--color-success-tint);
+  border-color: var(--color-success);
+  margin-bottom: var(--space-md);
+}
+.recovery-card h3 { margin: var(--space-sm) 0; }
+
+.helpline-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+  margin-bottom: var(--space-md);
+}
+.helpline-card .btn { width: auto; }

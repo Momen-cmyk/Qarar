@@ -1,0 +1,113 @@
+/**
+ * Design tokens — قرار / خطوة أمان
+ *
+ * Palette rationale: teal reads as calm authority (the tone of someone who
+ * has seen the data and is not panicking); amber is the caution-sign color
+ * lifted straight from the subject matter; brick-red is reserved for real
+ * alerts only, never decoration. The signature shape (see components.css)
+ * is a clipped corner — a road-sign / hazard-tag silhouette — used as the
+ * one consistent, recognizable device across every card and primary button.
+ */
+:root {
+  /* ---------- Color ---------- */
+  --color-primary: #0b6e6a;
+  --color-primary-dark: #073f3d;
+  --color-primary-tint: #e3f0ee;
+
+  --color-accent: #f2a63d;
+  --color-accent-dark: #c97f17;
+  --color-accent-tint: #fdf0db;
+
+  --color-danger: #c0392b;
+  --color-danger-dark: #922219;
+  --color-danger-tint: #fbe4e1;
+
+  --color-success: #2f9e62;
+  --color-success-tint: #e5f5ec;
+
+  --color-ink: #101b1a;
+  --color-text: #1c2624;
+  --color-text-light: #5c6a67;
+  --color-text-inverse: #f6f4ee;
+
+  --color-bg: #f6f4ee;
+  --color-bg-alt: #eee8d9;
+  --color-surface: #ffffff;
+  --color-border: #e1dac9;
+
+  /* ---------- Type ---------- */
+  --font-display: 'Cairo', 'Segoe UI', sans-serif;
+  --font-body: 'Tajawal', 'Segoe UI', sans-serif;
+
+  --fs-tiny: 0.75rem;
+  --fs-small: 0.875rem;
+  --fs-body: 1rem;
+  --fs-lg: 1.125rem;
+  --fs-h3: 1.25rem;
+  --fs-h2: 1.625rem;
+  --fs-h1: 2.25rem;
+  --fs-display: 3rem;
+
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-bold: 700;
+  --fw-black: 800;
+
+  /* ---------- Space & shape ---------- */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+
+  --radius-sm: 10px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --clip-corner: 18px; /* the signature cut-corner size */
+
+  --shadow-sm: 0 1px 3px rgba(16, 27, 26, 0.08);
+  --shadow-md: 0 6px 20px rgba(16, 27, 26, 0.10);
+  --shadow-lg: 0 20px 48px rgba(16, 27, 26, 0.16);
+
+  --transition-fast: 120ms ease;
+  --transition-base: 200ms ease;
+
+  /* ---------- Layout ---------- */
+  --content-max: 30rem;      /* mobile column width */
+  --desktop-max: 68rem;      /* full app canvas once the rail appears */
+  --rail-width: 88px;
+  --top-bar-height: 60px;
+  --bottom-nav-height: 68px;
+  --bp-desktop: 900px;
+}
+
+[data-theme="dark"] {
+  --color-ink: #f2f0e8;
+  --color-text: #eae7dd;
+  --color-text-light: #a8ada9;
+  --color-text-inverse: #101b1a;
+
+  --color-bg: #10201e;
+  --color-bg-alt: #16302c;
+  --color-surface: #17322e;
+  --color-border: #21403a;
+
+  --color-primary-tint: #14332f;
+  --color-accent-tint: #35291a;
+  --color-danger-tint: #3a201c;
+  --color-success-tint: #16302a;
+
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 6px 20px rgba(0, 0, 0, 0.35);
+  --shadow-lg: 0 20px 48px rgba(0, 0, 0, 0.5);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
