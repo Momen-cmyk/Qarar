@@ -6,6 +6,22 @@
  * any screen carries over to every other screen.
  */
 (function () {
+  var script = document.currentScript || document.querySelector('script[src$="theme.js"]');
+  var faviconPath = script && script.getAttribute('src')
+    ? script.getAttribute('src').replace(/\/js\/theme\.js$/, '/favicon.png')
+    : '../../favicon.png';
+
+  if (faviconPath) {
+    ['icon', 'shortcut icon'].forEach(function (rel) {
+      var link = document.createElement('link');
+      link.rel = rel;
+      link.href = faviconPath;
+      document.head.appendChild(link);
+    });
+  }
+})();
+
+(function () {
   var KEY = 'khotwa-theme';
 
   function getStored() {

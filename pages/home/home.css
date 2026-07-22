@@ -4,7 +4,12 @@
   justify-content: space-between;
   padding: var(--space-md) 0;
 }
-.home-greeting__name { font-family: var(--font-display); font-weight: var(--fw-bold); font-size: var(--fs-lg); }
+
+.home-greeting__name {
+  font-family: var(--font-display);
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-lg);
+}
 
 .stat-banner {
   background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
@@ -12,24 +17,63 @@
   padding: var(--space-lg);
   margin-bottom: var(--space-lg);
 }
-.stat-banner .badge { background: rgba(255,255,255,0.18); color: #fff; margin-bottom: var(--space-sm); }
-.stat-banner h2 { color: #fff; font-size: var(--fs-h3); }
-.stat-banner p { color: rgba(255,255,255,0.85); margin: 0; }
+
+.stat-banner .badge {
+  background: rgba(255, 255, 255, 0.18);
+  color: #fff;
+  margin-bottom: var(--space-sm);
+}
+
+.stat-banner h2 {
+  color: #fff;
+  font-size: var(--fs-h3);
+}
+
+.stat-banner p {
+  color: rgba(255, 255, 255, 0.85);
+  margin: 0;
+}
 
 .quick-grid { margin-bottom: var(--space-lg); }
+
 .quick-card {
   text-align: center;
   padding: var(--space-lg) var(--space-sm);
 }
-.quick-card__icon { font-size: 2rem; margin-bottom: var(--space-sm); }
-.quick-card h3 { font-size: var(--fs-body); margin-bottom: 2px; }
-.quick-card p { font-size: var(--fs-tiny); color: var(--color-text-light); margin: 0; }
 
-.feature-card { margin-bottom: var(--space-md); border-color: var(--color-accent); }
+.quick-card__icon {
+  font-size: 2rem;
+  margin-bottom: var(--space-sm);
+}
+
+.quick-card h3 {
+  font-size: var(--fs-body);
+  margin-bottom: 2px;
+}
+
+.quick-card p {
+  font-size: var(--fs-tiny);
+  color: var(--color-text-light);
+  margin: 0;
+}
+
+.feature-card {
+  margin-bottom: var(--space-md);
+  border-color: var(--color-accent);
+}
+
 .feature-card .btn { margin-top: var(--space-sm); }
 
-.fact-card { background: var(--color-bg-alt); border: none; }
-.fact-card h3 { font-size: var(--fs-small); color: var(--color-text-light); margin-bottom: 4px; }
+.fact-card {
+  background: var(--color-bg-alt);
+  border: none;
+}
+
+.fact-card h3 {
+  font-size: var(--fs-small);
+  color: var(--color-text-light);
+  margin-bottom: 4px;
+}
 
 @media (min-width: 900px) {
   .quick-grid { grid-template-columns: repeat(4, 1fr); }
