@@ -1,76 +1,27 @@
-/* ---------- Reset ---------- */
-*, *::before, *::after { box-sizing: border-box; }
-html, body { margin: 0; padding: 0; }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { -webkit-text-size-adjust: 100%; }
 body {
   font-family: var(--font-body);
-  background: var(--color-bg);
-  color: var(--color-text);
+  background: var(--bg);
+  color: var(--text);
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   min-height: 100vh;
+  line-height: 1.5;
 }
 h1, h2, h3, h4 {
   font-family: var(--font-display);
   font-weight: var(--fw-black);
-  color: var(--color-ink);
-  margin: 0 0 var(--space-sm);
-  line-height: 1.25;
+  color: var(--ink);
+  line-height: 1.2;
 }
 h1 { font-size: var(--fs-h1); }
-h2 { font-size: var(--fs-h2); }
-h3 { font-size: var(--fs-h3); }
-p { margin: 0 0 var(--space-sm); color: var(--color-text); line-height: 1.6; }
-a { color: inherit; }
-button { font-family: inherit; }
+h2 { font-size: var(--fs-h2); margin-bottom: var(--space-sm); }
+h3 { font-size: var(--fs-h3); margin-bottom: var(--space-sm); }
+p { margin: 0 0 var(--space-sm); color: var(--text); line-height: 1.7; }
+a { color: inherit; text-decoration: none; }
 img { max-width: 100%; display: block; }
-ul { margin: 0; padding: 0; list-style: none; }
-
-:focus-visible {
-  outline: 3px solid var(--color-accent);
-  outline-offset: 2px;
-}
-
-/* "Lane marking" divider — a dashed rule grounded in the subject, used
-   wherever content needs a structural break instead of a plain hairline. */
-.lane-divider {
-  border: none;
-  height: 0;
-  border-top: 3px dashed var(--color-border);
-  margin: var(--space-lg) 0;
-}
-
-/* ---------- App shell ----------
-   Mobile: single column, sticky top bar, fixed bottom tab bar.
-   Desktop (>= --bp-desktop): a persistent icon rail replaces the bottom
-   bar, docked to the trailing edge (right, in RTL) of the viewport, and
-   the content canvas widens for a real desktop reading/browsing width
-   instead of staying pinned at phone width. */
-.app-shell {
-  display: flex;
-  min-height: 100vh;
-}
-
-.app-frame {
-  flex: 1 1 auto;
-  min-width: 0;
-  min-height: 100vh;
-  padding-bottom: calc(var(--bottom-nav-height) + var(--space-md));
-}
-
-.app-frame__inner {
-  max-width: var(--content-max);
-  margin: 0 auto;
-  padding: 0 var(--space-md) var(--space-lg);
-}
-
-@media (min-width: 900px) {
-  body { background: var(--color-bg-alt); }
-
-  .app-frame { background: var(--color-bg); padding-bottom: var(--space-2xl); }
-
-  .app-frame__inner {
-    max-width: 44rem;
-    padding: 0 var(--space-2xl) var(--space-2xl);
-  }
-
-  .top-bar__inner, .app-frame__inner { max-width: 44rem; }
-}
+button { font-family: inherit; cursor: pointer; border: none; background: none; }
+input, textarea, select { font-family: inherit; }
+:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; border-radius: 4px; }
+::selection { background: var(--primary); color: #fff; }
