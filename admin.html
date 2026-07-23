@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>قرار - لوحة تحكم وإدارة البلاغات الطارئة</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; font-family: 'Tajawal', sans-serif; margin: 0; padding: 0; }
+        body { background-color: #f4f7f6; color: #333; padding: 20px; }
+        .header { background: #1a252f; color: white; padding: 20px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .header h1 { font-size: 1.8rem; display: flex; align-items: center; gap: 10px; }
+        .live-badge { background: #e74c3c; color: white; padding: 5px 12px; border-radius: 20px; font-size: 0.85rem; animation: pulse 1.5s infinite; }
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
+        
+        .filters-card { background: white; padding: 18px; border-radius: 12px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); display: flex; gap: 15px; flex-wrap: wrap; align-items: center; }
+        .filters-card label { font-weight: bold; color: #2c3e50; }
+        .filters-card select { padding: 10px; border-radius: 8px; border: 1px solid #ccc; font-family: 'Tajawal'; outline: none; font-size: 0.95rem; }
+        
+        .table-container { background: white; border-radius: 12px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; text-align: right; }
+        th, td { padding: 14px 16px; border-bottom: 1px solid #eee; vertical-align: middle; }
+        th { background-color: #f8f9fa; color: #2c3e50; font-weight: 700; }
+        tr.report-row { cursor: pointer; transition: background 0.2s; }
+        tr.report-row:hover { background-color: #f1f5f9; }
+        
+        .status-unread { background: #ffeaa7; color: #d63031; padding: 4px 10px; border-radius: 6px; font-weight: bold; font-size: 0.8rem; }
+        .status-read { background: #e8f8f5; color: #27ae60; padding: 4px 10px; border-radius: 6px; font-weight: bold; font-size: 0.8rem; }
+        
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 20px; }
+        .stat-card { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); text-align: center; }
+        .stat-card h3 { font-size: 2rem; color: #0d6e6e; margin-bottom: 5px; }
+        .stat-card p { color: #7f8c8d; font-size: 0.9rem; }
+
+        /* أزرار وقائمة الـ 3 نقط */
+        .action-menu-container { position: relative; display: inline-block; }
+        .dots-btn { background: #f0f2f5; border: none; font-size: 1.3rem; font-weight: bold; width: 35px; height: 35px; border-radius: 50%; cursor: pointer; color: #2c3e50; transition: background 0.2s; }
+        .dots-btn:hover { background: #e2e8f0; }
+        
+        .dropdown-menu { display: none; position: absolute; left: 0; top: 40px; background: white; min-width: 150px; box-shadow: 0 4px 15px rgba(0,0,0,0.15); border-radius: 8px; z-index: 100; overflow: hidden; border: 1px solid #eee; }
+        .dropdown-menu.show { display: block; }
+        .dropdown-item { padding: 10px 15px; font-size: 0.9rem; display: flex; align-items: center; gap: 8px; cursor: pointer; color: #333; transition: background 0.2s; text-align: right; border: none; width: 100%; background: none; }
+        .dropdown-item:hover { background: #f8f9fa; }
+        .dropdown-item.delete { color: #e74c3c; font-weight: bold; }
+        .dropdown-item.delete:hover { background: #fdf2f2; }
+
+        /* نافذة التفاصيل Modal */
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 1000; justify-content: center; align-items: center; }
+        .modal-card { background: white; width: 90%; max-width: 500px; border-radius: 12px; padding: 25px; box-shadow: 0 5px 20px rgba(0,0,0,0.2); position: relative; max-height: 90vh; overflow-y: auto; }
+        .close-btn { position: absolute; top: 15px; left: 15px; background: #eee; border: none; font-size: 1.2rem; width: 30px; height: 30px; border-radius: 50%; cursor: pointer; }
+        .modal-title { color: #c0392b; margin-bottom: 15px; font-size: 1.4rem; border-bottom: 2px solid #f4f7f6; padding-bottom: 10px; }
+        .modal-detail { margin-bottom: 12px; font-size: 0.95rem; line-height: 1.5; }
+        .modal-detail strong { color: #2c3e50; }
+        .map-btn { display: inline-block; width: 100%; text-align: center; background: #0d6e6e; color: white; padding: 12px; border-radius: 8px; text-decoration: none; font-weight: bold; margin-top: 15px; }
+        .report-img { width: 100%; max-height: 200px; object-fit: cover; border-radius: 8px; margin-top: 10px; border: 1px solid #ddd; }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>🛡️ مشروع قرار - غرفة إدارة الأزمات والبلاغات <span class="live-badge">مباشر LIVE</span></h1>
+        <p style="font-size: 0.9rem; opacity: 0.8;">نظام الربط المباشر بين المواطنين وغرفة العمليات</p>
+    </div>
+
+    <!-- الإحصائيات السريعة -->
+    <div class="stats-grid">
+        <div class="stat-card">
+            <h3 id="totalCount">0</h3>
+            <p>إجمالي البلاغات الواردة</p>
+        </div>
+        <div class="stat-card">
+            <h3 id="todayCount" style="color: #e74c3c;">0</h3>
+            <p>بلاغات اليوم</p>
+        </div>
+        <div class="stat-card">
+            <h3 id="drugsCount" style="color: #8e44ad;">0</h3>
+            <p>بلاغات مواد مخدرة/ترويج</p>
+        </div>
+    </div>
+
+    <!-- الفلاتر -->
+    <div class="filters-card">
+        <label>🔍 تصفية البلاغات:</label>
+        
+        <select id="typeFilter" onchange="filterReports()">
+            <option value="ALL">جميع أنواع البلاغات</option>
+            <option value="حادث مروري">🚨 حوادث طرق</option>
+            <option value="سائق متهور">🚗 سائقين متهورين</option>
+            <option value="بلاغ مخدرات / ترويج">🛑 مخدرات ونشاط مشبوه</option>
+            <option value="إشارة / مطب تلف">⚠️ إشارات ومطبات تالفة</option>
+        </select>
+
+        <select id="timeFilter" onchange="filterReports()">
+            <option value="ALL">كل الفترات الزمنية</option>
+            <option value="TODAY">بلاغات اليوم</option>
+            <option value="WEEK">الأسبوع الحالي</option>
+            <option value="MONTH">الشهر الحالي</option>
+            <option value="YEAR">السنة الحالية</option>
+        </select>
+    </div>
+
+    <!-- جدول عرض البلاغات الحية -->
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>نوع البلاغ</th>
+                    <th>الموقع (GPS)</th>
+                    <th>التفاصيل</th>
+                    <th>الوقت</th>
+                    <th>التاريخ</th>
+                    <th>الحالة</th>
+                    <th style="text-align: center;">خيارات</th>
+                </tr>
+            </thead>
+            <tbody id="reportsTableBody">
+                <tr>
+                    <td colspan="8" style="text-align: center; color: #888;">⏳ في انتظار إرسال بلاغ جديد...</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- نافذة تفاصيل البلاغ (Modal) -->
+    <div class="modal-overlay" id="detailModal">
+        <div class="modal-card">
+            <button class="close-btn" onclick="closeModal()">✕</button>
+            <h2 class="modal-title" id="mType">🚨 تفاصيل البلاغ</h2>
+            
+            <div class="modal-detail"><strong>📅 التاريخ والوقت:</strong> <span id="mDateTime"></span></div>
+            <div class="modal-detail"><strong>📍 الموقع المسجل:</strong> <span id="mLocation"></span></div>
+            <div class="modal-detail"><strong>📝 تفاصيل البلاغ:</strong> <p id="mDetails" style="background:#f9f9f9; padding:10px; border-radius:6px; margin-top:5px;"></p></div>
+            
+            <div id="imgContainer" style="display:none;">
+                <div class="modal-detail"><strong>📷 الصورة المرفقة:</strong></div>
+                <img id="mImage" class="report-img" src="" alt="صورة البلاغ">
+            </div>
+
+            <a id="mMapLink" href="#" target="_blank" class="map-btn">🗺️ فتح موقع البلاغ على Google Maps</a>
+        </div>
+    </div>
+
+    <script>
+        const channel = new BroadcastChannel('qarar_reports_channel');
+        let allReports = JSON.parse(localStorage.getItem('qarar_reports') || '[]');
+        let lastReportLength = allReports.length;
+
+        function playBeep() {
+            try {
+                const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                const osc = ctx.createOscillator();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(880, ctx.currentTime);
+                osc.connect(ctx.destination);
+                osc.start();
+                osc.stop(ctx.currentTime + 0.3);
+            } catch(e) {}
+        }
+
+        function loadReports() {
+            const currentData = JSON.parse(localStorage.getItem('qarar_reports') || '[]');
+            
+            // إصدار صوت تنبيه لو وصل بلاغ جديد تلقائياً
+            if (currentData.length > lastReportLength) {
+                playBeep();
+            }
+            lastReportLength = currentData.length;
+            allReports = currentData;
+
+            updateStats();
+            filterReports();
+        }
+
+        // 🟢 الحل التلقائي المضمون 100%: التحديث مع تغيير الـ Storage + مؤقت فوري كل ثانية
+        window.addEventListener('storage', loadReports);
+        channel.onmessage = function() { loadReports(); };
+        setInterval(loadReports, 1000); 
+
+        function updateStats() {
+            document.getElementById('totalCount').innerText = allReports.length;
+            const todayStr = new Date().toISOString().split('T')[0];
+            
+            const todayNum = allReports.filter(r => r.date === todayStr).length;
+            document.getElementById('todayCount').innerText = todayNum;
+
+            const drugsNum = allReports.filter(r => r.type && r.type.includes('مخدرات')).length;
+            document.getElementById('drugsCount').innerText = drugsNum;
+        }
+
+        function filterReports() {
+            const typeVal = document.getElementById('typeFilter').value;
+            const timeVal = document.getElementById('timeFilter').value;
+            const tbody = document.getElementById('reportsTableBody');
+            
+            let filtered = [...allReports];
+
+            if (typeVal !== 'ALL') {
+                filtered = filtered.filter(r => r.type === typeVal);
+            }
+
+            const todayStr = new Date().toISOString().split('T')[0];
+            if (timeVal === 'TODAY') {
+                filtered = filtered.filter(r => r.date === todayStr);
+            }
+
+            if (filtered.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="8" style="text-align: center; color: #888;">لا توجد بلاغات مسجلة.</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = '';
+            filtered.forEach((item, index) => {
+                const realIndex = allReports.indexOf(item);
+                const isRead = item.read === true;
+                const tr = document.createElement('tr');
+                tr.className = 'report-row';
+                
+                tr.innerHTML = `
+                    <td onclick="openModal(${realIndex})"><strong>${index + 1}</strong></td>
+                    <td onclick="openModal(${realIndex})" style="font-weight: bold; color: #c0392b;">${item.type || 'بلاغ عام'}</td>
+                    <td onclick="openModal(${realIndex})">📍 ${item.location || 'غير محدد'}</td>
+                    <td onclick="openModal(${realIndex})">${(item.details || '-').substring(0, 25)}...</td>
+                    <td onclick="openModal(${realIndex})">⏱️ ${item.time || ''}</td>
+                    <td onclick="openModal(${realIndex})">📅 ${item.date || ''}</td>
+                    <td onclick="openModal(${realIndex})">
+                        <span class="${isRead ? 'status-read' : 'status-unread'}">
+                            ${isRead ? 'تم الاطلاع ✅' : 'جديد 🔴'}
+                        </span>
+                    </td>
+                    <td style="text-align: center;" onclick="event.stopPropagation();">
+                        <div class="action-menu-container">
+                            <button class="dots-btn" onclick="toggleDropdown(event, ${realIndex})">⋮</button>
+                            <div class="dropdown-menu" id="dropdown-${realIndex}">
+                                <button class="dropdown-item" onclick="openModal(${realIndex})">👁️ عرض التفاصيل</button>
+                                <button class="dropdown-item delete" onclick="deleteReport(${realIndex})">🗑️ حذف البلاغ</button>
+                            </div>
+                        </div>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // فتح وإغلاق قائمة الـ 3 نقط
+        function toggleDropdown(event, index) {
+            event.stopPropagation();
+            document.querySelectorAll('.dropdown-menu').forEach(el => {
+                if(el.id !== `dropdown-${index}`) el.classList.remove('show');
+            });
+            const drop = document.getElementById(`dropdown-${index}`);
+            if (drop) drop.classList.toggle('show');
+        }
+
+        // إغلاق القوائم عند الضغط في أي مكان
+        window.addEventListener('click', function() {
+            document.querySelectorAll('.dropdown-menu').forEach(el => el.classList.remove('show'));
+        });
+
+        // حذف البلاغ
+        function deleteReport(index) {
+            if (confirm("هل أنت تأكد من رغبتك في حذف هذا البلاغ؟")) {
+                allReports.splice(index, 1);
+                localStorage.setItem('qarar_reports', JSON.stringify(allReports));
+                loadReports();
+            }
+        }
+
+        // فتح نافذة التفاصيل وتغيير الحالة لـ "تم الاطلاع ✅"
+        function openModal(index) {
+            const item = allReports[index];
+            if (!item) return;
+
+            // تحويل الحالة إلى تم الاطلاع
+            item.read = true;
+            localStorage.setItem('qarar_reports', JSON.stringify(allReports));
+            loadReports();
+
+            document.getElementById('mType').innerText = item.type || 'بلاغ طارئ';
+            document.getElementById('mDateTime').innerText = `${item.date || ''} | ${item.time || ''}`;
+            document.getElementById('mLocation').innerText = item.location || 'غير محدد';
+            document.getElementById('mDetails').innerText = item.details || 'لا توجد تفاصيل إضافية.';
+
+            const mapQuery = encodeURIComponent(item.location || 'القاهرة');
+            document.getElementById('mMapLink').href = `https://www.google.com/maps/search/?api=1&query=${mapQuery}`;
+
+            if (item.image) {
+                document.getElementById('mImage').src = item.image;
+                document.getElementById('imgContainer').style.display = 'block';
+            } else {
+                document.getElementById('imgContainer').style.display = 'none';
+            }
+
+            document.getElementById('detailModal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('detailModal').style.display = 'none';
+        }
+
+        // التحميل الأولي
+        loadReports();
+    </script>
+</body>
+</html>
