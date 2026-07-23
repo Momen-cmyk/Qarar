@@ -15,7 +15,7 @@
 </head>
 <body>
   <div class="auth-screen">
-    <button class="btn-text auth__back" onclick="goBack()">→ رجوع</button>
+    <button class="btn-text auth__back" onclick="window.history.back()">→ رجوع</button>
     <div class="auth__badge">🚦</div>
     <h1>إنشاء حساب جديد</h1>
     <p class="auth__lead">انضم لآلاف المستخدمين الذين يجعلون الطريق أكثر أمانًا.</p>
@@ -40,7 +40,6 @@
   </div>
 
   <script src="../../js/storage.js"></script>
-  <script src="../../js/shell.js"></script>
   <script src="./auth.js"></script>
 </body>
 </html>

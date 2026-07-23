@@ -1,31 +1,39 @@
-.onboarding-screen {
-  min-height: 100vh;
+/* ---------- Splash page ---------- */
+
+.splash-page,
+.splash-page body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+  background: var(--color-primary-dark);
+}
+
+.splash {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  text-align: center;
+  color: var(--color-text-inverse);
+  padding: var(--space-lg);
+  padding-bottom: 12vh;
+}
+
+.splash__bg {
+  position: fixed;
+  inset: 0;
+  background: url('../../intrologo.jpg') center / contain no-repeat;
+  z-index: 0;
+}
+
+.splash__body {
+  position: relative;
+  z-index: 2;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  text-align: center;
-  background: linear-gradient(180deg, var(--color-primary-dark) 0%, var(--color-primary) 100%);
-  color: var(--color-text-inverse);
-  padding: var(--space-lg);
-}
-
-.splash__badge {
-  width: 96px;
-  height: 96px;
-  background: var(--color-accent);
-  clip-path: polygon(0 0, calc(100% - 26px) 0, 100% 26px, 100% 100%, 0 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 2.75rem;
-  margin-bottom: var(--space-lg);
-}
-
-.splash__logo {
-  width: 60%;
-  height: 60%;
-  object-fit: contain;
 }
 
 .splash__title {
@@ -55,6 +63,17 @@
 @keyframes spin {
   to {
     transform: rotate(360deg);
+  }
+}
+
+@media (min-width: 900px) {
+  .splash__title {
+    font-size: 4rem;
+  }
+
+  .splash__tagline {
+    font-size: var(--fs-h3);
+    max-width: 28rem;
   }
 }
 
