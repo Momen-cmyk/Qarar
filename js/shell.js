@@ -52,7 +52,7 @@
     var tabEl = document.getElementById('tabBar');
     if (railEl) {
       railEl.className = 'nav-rail';
-      railEl.innerHTML = '<span class="nav-rail__brand"><img src="' + getLogoPath() + '" alt="خطوة أمان" class="nav-rail__brand-img"></span>' + navLinksHTML('nav-rail__item', 'nav-rail__icon');
+      railEl.innerHTML = '<span class="nav-rail__brand"><img src="' + getLogoPath() + '" alt="قرار" class="nav-rail__brand-img"></span>' + navLinksHTML('nav-rail__item', 'nav-rail__icon');
     }
     if (tabEl) {
       tabEl.className = 'tab-bar';
