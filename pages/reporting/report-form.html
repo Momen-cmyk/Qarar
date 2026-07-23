@@ -1,66 +1,62 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>إرسال بلاغ - قرار</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;800&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../css/variables.css">
-  <link rel="stylesheet" href="../../css/base.css">
-  <link rel="stylesheet" href="../../css/shell.css">
-  <link rel="stylesheet" href="../../css/components.css">
-  <link rel="stylesheet" href="./reporting.css">
-  <script src="../../js/theme.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>قرار - إرسال بلاغ</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@700;900&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/variables.css">
+    <link rel="stylesheet" href="../../css/base.css">
+    <link rel="stylesheet" href="../../css/components.css">
+    <link rel="stylesheet" href="./reporting.css">
 </head>
-<body data-title="إرسال بلاغ" data-back="true">
-  <div class="app-shell">
-    <div id="navRail"></div>
-    <main class="app-frame">
-      <header id="topBar"></header>
-      <div class="app-frame__inner">
+<body data-page="reporting">
+    <div class="app-frame">
+        <header class="top-bar">
+            <button class="back-btn" onclick="history.back()" style="background:none; border:none; font-size: 1.5rem; cursor:pointer;">←</button>
+            <h2>إرسال بلاغ - قرار</h2>
+        </header>
 
-        <form id="reportForm">
-          <h2 class="section-title" style="margin-top:0">نوع البلاغ</h2>
-          <div class="report-type-grid">
-            <label class="card report-type"><input type="radio" name="reportType" value="reckless_driver" required><span class="report-type__icon">🚗</span>سائق متهور</label>
-            <label class="card report-type"><input type="radio" name="reportType" value="broken_signal"><span class="report-type__icon">🚦</span>إشارة تالفة</label>
-            <label class="card report-type"><input type="radio" name="reportType" value="dangerous_bump"><span class="report-type__icon">⚠️</span>مطب خطير</label>
-            <label class="card report-type"><input type="radio" name="reportType" value="accident"><span class="report-type__icon">🚨</span>حادث يحتاج تدخل</label>
-            <label class="card report-type"><input type="radio" name="reportType" value="other"><span class="report-type__icon">📌</span>أخرى</label>
-          </div>
+        <main class="page-content" style="padding: 15px;">
+            <!-- تنبيه السلامة -->
+            <div style="background-color: #fff3cd; color: #856404; padding: 12px; border-radius: 10px; border: 1px solid #ffeeba; margin-bottom: 15px; font-size: 0.85rem; line-height: 1.4;">
+                <strong>⚠️ تنبيه سلامة هام:</strong> حريصون على حياتك! يُمنع منعاً باتاً استخدام التطبيق أثناء القيادة. يرجى التوقف في مكان آمن أو إرسال البلاغ لاحقاً.
+            </div>
 
-          <h2 class="section-title">الموقع</h2>
-          <button type="button" class="btn btn-outline" id="autoLocationBtn">📍 تحديد الموقع تلقائيًا</button>
-          <div class="map-placeholder" style="margin-top: var(--space-md)">سيظهر الموقع المحدد هنا</div>
+            <form id="liveReportForm">
+                <!-- نوع البلاغ -->
+                <label style="font-weight: bold; display: block; margin-bottom: 8px;">نوع البلاغ:</label>
+                <select id="reportType" style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #ccc; margin-bottom: 15px; font-family: 'Tajawal'; font-size: 1rem;" required>
+                    <option value="حادث مروري">🚨 حادث مروري يحتاج تدخل</option>
+                    <option value="سائق متهور">🚗 سائق متهور / سرعة زائدة</option>
+                    <option value="بلاغ مخدرات / ترويج">🛑 نشاط مشبوه / بلاغ مخدرات</option>
+                    <option value="إشارة / مطب تلف">⚠️ إشارة تالفة / مطب خطير</option>
+                    <option value="أخرى">📌 بلاغ آخر</option>
+                </select>
 
-          <h2 class="section-title">صورة (اختياري)</h2>
-          <label class="upload-box">
-            <span>📷</span>
-            <span>إضافة صورة</span>
-            <input type="file" id="photoInput" accept="image/*" hidden>
-          </label>
+                <!-- التقاط صورة من الكاميرا -->
+                <label style="font-weight: bold; display: block; margin-bottom: 8px;">إرفاق صورة مباشرة (الكاميرا):</label>
+                <input type="file" id="cameraInput" accept="image/*" capture="environment" style="width: 100%; padding: 10px; background: #fff; border-radius: 8px; border: 1px solid #ccc; margin-bottom: 15px;">
 
-          <div class="field">
-            <label for="description">وصف الحالة (اختياري)</label>
-            <textarea id="description" rows="3" placeholder="اكتب وصفًا مختصرًا..."></textarea>
-          </div>
+                <!-- تحديد الموقع -->
+                <label style="font-weight: bold; display: block; margin-bottom: 8px;">الموقع:</label>
+                <button type="button" id="geoBtn" onclick="getLocation()" style="width: 100%; padding: 12px; background: #0d6e6e; color: white; border: none; border-radius: 8px; font-family: 'Tajawal'; font-weight: bold; margin-bottom: 8px; cursor: pointer;">📍 تحديد موقعي تلقائياً (GPS)</button>
+                <input type="text" id="locationInput" placeholder="أو اكتب اسم المنطقة (مثال: التجمع الخامس - ش الستين)" style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #ccc; margin-bottom: 15px; font-family: 'Tajawal';" required>
 
-          <label class="checkbox-row" style="margin-bottom: var(--space-md)">
-            <input type="checkbox" id="anonymousCheck"> إرسال بدون ذكر اسمي
-          </label>
+                <!-- تفاصيل البلاغ -->
+                <label style="font-weight: bold; display: block; margin-bottom: 8px;">تفاصيل إضافية:</label>
+                <textarea id="reportDetails" rows="3" placeholder="اكتب تفاصيل مختصرة للموقف..." style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #ccc; margin-bottom: 20px; font-family: 'Tajawal';"></textarea>
 
-          <button class="btn btn-danger" type="submit">إرسال البلاغ</button>
-        </form>
+                <!-- زر الإرسال -->
+                <button type="submit" id="submitBtn" style="width: 100%; padding: 15px; background: #c0392b; color: white; border: none; border-radius: 10px; font-size: 1.1rem; font-weight: bold; font-family: 'Tajawal'; cursor: pointer;">🚨 إرسال البلاغ فوراً</button>
+            </form>
+        </main>
+    </div>
 
-      </div>
-    </main>
-  </div>
-  <nav id="tabBar"></nav>
-
-  <script src="../../js/storage.js"></script>
-  <script src="../../js/shell.js"></script>
-  <script src="./reporting.js"></script>
+    <!-- مكتبات Firebase والربط المباشر -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+    <script src="./report-sender.js"></script>
 </body>
 </html>
