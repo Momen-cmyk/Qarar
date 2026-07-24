@@ -32,7 +32,6 @@
         .stat-card h3 { font-size: 2rem; color: #0d6e6e; margin-bottom: 5px; }
         .stat-card p { color: #7f8c8d; font-size: 0.9rem; }
 
-        /* أزرار وقائمة الـ 3 نقط */
         .action-menu-container { position: relative; display: inline-block; }
         .dots-btn { background: #f0f2f5; border: none; font-size: 1.3rem; font-weight: bold; width: 35px; height: 35px; border-radius: 50%; cursor: pointer; color: #2c3e50; transition: background 0.2s; }
         .dots-btn:hover { background: #e2e8f0; }
@@ -44,7 +43,6 @@
         .dropdown-item.delete { color: #e74c3c; font-weight: bold; }
         .dropdown-item.delete:hover { background: #fdf2f2; }
 
-        /* نافذة التفاصيل Modal */
         .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 1000; justify-content: center; align-items: center; }
         .modal-card { background: white; width: 90%; max-width: 500px; border-radius: 12px; padding: 25px; box-shadow: 0 5px 20px rgba(0,0,0,0.2); position: relative; max-height: 90vh; overflow-y: auto; }
         .close-btn { position: absolute; top: 15px; left: 15px; background: #eee; border: none; font-size: 1.2rem; width: 30px; height: 30px; border-radius: 50%; cursor: pointer; }
@@ -62,7 +60,6 @@
         <p style="font-size: 0.9rem; opacity: 0.8;">نظام الربط المباشر بين المواطنين وغرفة العمليات</p>
     </div>
 
-    <!-- الإحصائيات السريعة -->
     <div class="stats-grid">
         <div class="stat-card">
             <h3 id="totalCount">0</h3>
@@ -78,10 +75,8 @@
         </div>
     </div>
 
-    <!-- الفلاتر -->
     <div class="filters-card">
         <label>🔍 تصفية البلاغات:</label>
-        
         <select id="typeFilter" onchange="filterReports()">
             <option value="ALL">جميع أنواع البلاغات</option>
             <option value="حادث مروري">🚨 حوادث طرق</option>
@@ -89,7 +84,6 @@
             <option value="بلاغ مخدرات / ترويج">🛑 مخدرات ونشاط مشبوه</option>
             <option value="إشارة / مطب تلف">⚠️ إشارات ومطبات تالفة</option>
         </select>
-
         <select id="timeFilter" onchange="filterReports()">
             <option value="ALL">كل الفترات الزمنية</option>
             <option value="TODAY">بلاغات اليوم</option>
@@ -99,7 +93,6 @@
         </select>
     </div>
 
-    <!-- جدول عرض البلاغات الحية -->
     <div class="table-container">
         <table>
             <thead>
@@ -122,85 +115,110 @@
         </table>
     </div>
 
-    <!-- نافذة تفاصيل البلاغ (Modal) -->
     <div class="modal-overlay" id="detailModal">
         <div class="modal-card">
             <button class="close-btn" onclick="closeModal()">✕</button>
             <h2 class="modal-title" id="mType">🚨 تفاصيل البلاغ</h2>
-            
             <div class="modal-detail"><strong>📅 التاريخ والوقت:</strong> <span id="mDateTime"></span></div>
             <div class="modal-detail"><strong>📍 الموقع المسجل:</strong> <span id="mLocation"></span></div>
             <div class="modal-detail"><strong>📝 تفاصيل البلاغ:</strong> <p id="mDetails" style="background:#f9f9f9; padding:10px; border-radius:6px; margin-top:5px;"></p></div>
-            
             <div id="imgContainer" style="display:none;">
                 <div class="modal-detail"><strong>📷 الصورة المرفقة:</strong></div>
                 <img id="mImage" class="report-img" src="" alt="صورة البلاغ">
             </div>
-
             <a id="mMapLink" href="#" target="_blank" class="map-btn">🗺️ فتح موقع البلاغ على Google Maps</a>
         </div>
     </div>
 
-    <script>
-        const channel = new BroadcastChannel('qarar_reports_channel');
-        let allReports = JSON.parse(localStorage.getItem('qarar_reports') || '[]');
-        let lastReportLength = allReports.length;
+    <!-- Firebase Logic -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+        import { getDatabase, ref, onValue, remove, update } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-database.js";
 
-        function playBeep() {
+        const firebaseConfig = {
+            apiKey: "AIzaSyD9aVz8DTHIUaWSp2JMPOSTUH5f6TqjDcg",
+            authDomain: "qarar-20d04.firebaseapp.com",
+            databaseURL: "https://qarar-20d04-default-rtdb.europe-west1.firebasedatabase.app",
+            projectId: "qarar-20d04",
+            storageBucket: "qarar-20d04.firebasestorage.app",
+            messagingSenderId: "698538320361",
+            appId: "1:698538320361:web:fa4191ad23d9e6e7362b78"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        let allReports = [];
+        let lastReportCount = 0;
+        let alarmPlayed = false;
+
+        function playAlarm() {
+            if (alarmPlayed) return;
+            alarmPlayed = true;
+            
             try {
-                const ctx = new (window.AudioContext || window.webkitAudioContext)();
-                const osc = ctx.createOscillator();
-                osc.type = 'sine';
-                osc.frequency.setValueAtTime(880, ctx.currentTime);
-                osc.connect(ctx.destination);
-                osc.start();
-                osc.stop(ctx.currentTime + 0.3);
-            } catch(e) {}
+                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                
+                oscillator.type = 'sine';
+                oscillator.frequency.setValueAtTime(880, audioContext.currentTime);
+                oscillator.frequency.setValueAtTime(1100, audioContext.currentTime + 0.1);
+                oscillator.frequency.setValueAtTime(880, audioContext.currentTime + 0.2);
+                
+                gainNode.gain.setValueAtTime(0.5, audioContext.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 3);
+                
+                oscillator.start(audioContext.currentTime);
+                oscillator.stop(audioContext.currentTime + 3);
+                
+                setTimeout(() => { alarmPlayed = false; }, 3500);
+            } catch(e) {
+                console.error("خطأ في تشغيل الصوت:", e);
+                alarmPlayed = false;
+            }
         }
 
-        function loadReports() {
-            const currentData = JSON.parse(localStorage.getItem('qarar_reports') || '[]');
+        const reportsRef = ref(db, 'reports');
+        onValue(reportsRef, (snapshot) => {
+            const data = snapshot.val();
+            allReports = [];
             
-            // إصدار صوت تنبيه لو وصل بلاغ جديد تلقائياً
-            if (currentData.length > lastReportLength) {
-                playBeep();
+            if (data) {
+                Object.entries(data).forEach(([key, value]) => {
+                    allReports.push({ id: key, ...value });
+                });
+                allReports.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
             }
-            lastReportLength = currentData.length;
-            allReports = currentData;
 
+            if (allReports.length > lastReportCount && allReports.length > 0) {
+                playAlarm();
+            }
+            
+            lastReportCount = allReports.length;
             updateStats();
             filterReports();
-        }
-
-        // 🟢 الحل التلقائي المضمون 100%: التحديث مع تغيير الـ Storage + مؤقت فوري كل ثانية
-        window.addEventListener('storage', loadReports);
-        channel.onmessage = function() { loadReports(); };
-        setInterval(loadReports, 1000); 
+        });
 
         function updateStats() {
             document.getElementById('totalCount').innerText = allReports.length;
             const todayStr = new Date().toISOString().split('T')[0];
-            
-            const todayNum = allReports.filter(r => r.date === todayStr).length;
-            document.getElementById('todayCount').innerText = todayNum;
-
-            const drugsNum = allReports.filter(r => r.type && r.type.includes('مخدرات')).length;
-            document.getElementById('drugsCount').innerText = drugsNum;
+            document.getElementById('todayCount').innerText = allReports.filter(r => r.date === todayStr).length;
+            document.getElementById('drugsCount').innerText = allReports.filter(r => r.type && r.type.includes('مخدرات')).length;
         }
 
         function filterReports() {
             const typeVal = document.getElementById('typeFilter').value;
             const timeVal = document.getElementById('timeFilter').value;
             const tbody = document.getElementById('reportsTableBody');
-            
             let filtered = [...allReports];
 
-            if (typeVal !== 'ALL') {
-                filtered = filtered.filter(r => r.type === typeVal);
-            }
-
-            const todayStr = new Date().toISOString().split('T')[0];
+            if (typeVal !== 'ALL') filtered = filtered.filter(r => r.type === typeVal);
             if (timeVal === 'TODAY') {
+                const todayStr = new Date().toISOString().split('T')[0];
                 filtered = filtered.filter(r => r.date === todayStr);
             }
 
@@ -211,29 +229,25 @@
 
             tbody.innerHTML = '';
             filtered.forEach((item, index) => {
-                const realIndex = allReports.indexOf(item);
                 const isRead = item.read === true;
                 const tr = document.createElement('tr');
                 tr.className = 'report-row';
-                
                 tr.innerHTML = `
-                    <td onclick="openModal(${realIndex})"><strong>${index + 1}</strong></td>
-                    <td onclick="openModal(${realIndex})" style="font-weight: bold; color: #c0392b;">${item.type || 'بلاغ عام'}</td>
-                    <td onclick="openModal(${realIndex})">📍 ${item.location || 'غير محدد'}</td>
-                    <td onclick="openModal(${realIndex})">${(item.details || '-').substring(0, 25)}...</td>
-                    <td onclick="openModal(${realIndex})">⏱️ ${item.time || ''}</td>
-                    <td onclick="openModal(${realIndex})">📅 ${item.date || ''}</td>
-                    <td onclick="openModal(${realIndex})">
-                        <span class="${isRead ? 'status-read' : 'status-unread'}">
-                            ${isRead ? 'تم الاطلاع ✅' : 'جديد 🔴'}
-                        </span>
+                    <td onclick="openModal('${item.id}')"><strong>${index + 1}</strong></td>
+                    <td onclick="openModal('${item.id}')" style="font-weight: bold; color: #c0392b;">${item.type || 'بلاغ عام'}</td>
+                    <td onclick="openModal('${item.id}')">📍 ${item.location || 'غير محدد'}</td>
+                    <td onclick="openModal('${item.id}')">${(item.details || '-').substring(0, 25)}...</td>
+                    <td onclick="openModal('${item.id}')">⏱️ ${item.time || ''}</td>
+                    <td onclick="openModal('${item.id}')">📅 ${item.date || ''}</td>
+                    <td onclick="openModal('${item.id}')">
+                        <span class="${isRead ? 'status-read' : 'status-unread'}">${isRead ? 'تم الاطلاع ✅' : 'جديد 🔴'}</span>
                     </td>
                     <td style="text-align: center;" onclick="event.stopPropagation();">
                         <div class="action-menu-container">
-                            <button class="dots-btn" onclick="toggleDropdown(event, ${realIndex})">⋮</button>
-                            <div class="dropdown-menu" id="dropdown-${realIndex}">
-                                <button class="dropdown-item" onclick="openModal(${realIndex})">👁️ عرض التفاصيل</button>
-                                <button class="dropdown-item delete" onclick="deleteReport(${realIndex})">🗑️ حذف البلاغ</button>
+                            <button class="dots-btn" onclick="toggleDropdown(event, '${item.id}')">⋮</button>
+                            <div class="dropdown-menu" id="dropdown-${item.id}">
+                                <button class="dropdown-item" onclick="openModal('${item.id}')">👁️ عرض التفاصيل</button>
+                                <button class="dropdown-item delete" onclick="deleteReport('${item.id}')">🗑️ حذف البلاغ</button>
                             </div>
                         </div>
                     </td>
@@ -242,47 +256,36 @@
             });
         }
 
-        // فتح وإغلاق قائمة الـ 3 نقط
-        function toggleDropdown(event, index) {
+        function toggleDropdown(event, id) {
             event.stopPropagation();
             document.querySelectorAll('.dropdown-menu').forEach(el => {
-                if(el.id !== `dropdown-${index}`) el.classList.remove('show');
+                if(el.id !== `dropdown-${id}`) el.classList.remove('show');
             });
-            const drop = document.getElementById(`dropdown-${index}`);
+            const drop = document.getElementById(`dropdown-${id}`);
             if (drop) drop.classList.toggle('show');
         }
 
-        // إغلاق القوائم عند الضغط في أي مكان
         window.addEventListener('click', function() {
             document.querySelectorAll('.dropdown-menu').forEach(el => el.classList.remove('show'));
         });
 
-        // حذف البلاغ
-        function deleteReport(index) {
-            if (confirm("هل أنت تأكد من رغبتك في حذف هذا البلاغ؟")) {
-                allReports.splice(index, 1);
-                localStorage.setItem('qarar_reports', JSON.stringify(allReports));
-                loadReports();
+        window.deleteReport = function(id) {
+            if (confirm("هل أنت متأكد من رغبتك في حذف هذا البلاغ؟")) {
+                remove(ref(db, `reports/${id}`));
             }
-        }
+        };
 
-        // فتح نافذة التفاصيل وتغيير الحالة لـ "تم الاطلاع ✅"
-        function openModal(index) {
-            const item = allReports[index];
+        window.openModal = function(id) {
+            const item = allReports.find(r => r.id === id);
             if (!item) return;
 
-            // تحويل الحالة إلى تم الاطلاع
-            item.read = true;
-            localStorage.setItem('qarar_reports', JSON.stringify(allReports));
-            loadReports();
+            update(ref(db, `reports/${id}`), { read: true });
 
             document.getElementById('mType').innerText = item.type || 'بلاغ طارئ';
             document.getElementById('mDateTime').innerText = `${item.date || ''} | ${item.time || ''}`;
             document.getElementById('mLocation').innerText = item.location || 'غير محدد';
             document.getElementById('mDetails').innerText = item.details || 'لا توجد تفاصيل إضافية.';
-
-            const mapQuery = encodeURIComponent(item.location || 'القاهرة');
-            document.getElementById('mMapLink').href = `https://www.google.com/maps/search/?api=1&query=${mapQuery}`;
+            document.getElementById('mMapLink').href = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(item.location || 'القاهرة')}`;
 
             if (item.image) {
                 document.getElementById('mImage').src = item.image;
@@ -290,16 +293,12 @@
             } else {
                 document.getElementById('imgContainer').style.display = 'none';
             }
-
             document.getElementById('detailModal').style.display = 'flex';
-        }
+        };
 
-        function closeModal() {
+        window.closeModal = function() {
             document.getElementById('detailModal').style.display = 'none';
-        }
-
-        // التحميل الأولي
-        loadReports();
+        };
     </script>
 </body>
 </html>
