@@ -19,13 +19,11 @@
         </header>
 
         <main class="page-content" style="padding: 15px;">
-            <!-- تنبيه السلامة -->
             <div style="background-color: #fff3cd; color: #856404; padding: 12px; border-radius: 10px; border: 1px solid #ffeeba; margin-bottom: 15px; font-size: 0.85rem; line-height: 1.4;">
                 <strong>⚠️ تنبيه سلامة هام:</strong> حريصون على حياتك! يُمنع منعاً باتاً استخدام التطبيق أثناء القيادة. يرجى التوقف في مكان آمن أو إرسال البلاغ لاحقاً.
             </div>
 
             <form id="liveReportForm">
-                <!-- نوع البلاغ -->
                 <label style="font-weight: bold; display: block; margin-bottom: 8px;">نوع البلاغ:</label>
                 <select id="reportType" style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #ccc; margin-bottom: 15px; font-family: 'Tajawal'; font-size: 1rem;" required>
                     <option value="حادث مروري">🚨 حادث مروري يحتاج تدخل</option>
@@ -35,28 +33,42 @@
                     <option value="أخرى">📌 بلاغ آخر</option>
                 </select>
 
-                <!-- التقاط صورة من الكاميرا -->
                 <label style="font-weight: bold; display: block; margin-bottom: 8px;">إرفاق صورة مباشرة (الكاميرا):</label>
                 <input type="file" id="cameraInput" accept="image/*" capture="environment" style="width: 100%; padding: 10px; background: #fff; border-radius: 8px; border: 1px solid #ccc; margin-bottom: 15px;">
 
-                <!-- تحديد الموقع -->
                 <label style="font-weight: bold; display: block; margin-bottom: 8px;">الموقع:</label>
                 <button type="button" id="geoBtn" onclick="getLocation()" style="width: 100%; padding: 12px; background: #0d6e6e; color: white; border: none; border-radius: 8px; font-family: 'Tajawal'; font-weight: bold; margin-bottom: 8px; cursor: pointer;">📍 تحديد موقعي تلقائياً (GPS)</button>
                 <input type="text" id="locationInput" placeholder="أو اكتب اسم المنطقة (مثال: التجمع الخامس - ش الستين)" style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #ccc; margin-bottom: 15px; font-family: 'Tajawal';" required>
 
-                <!-- تفاصيل البلاغ -->
                 <label style="font-weight: bold; display: block; margin-bottom: 8px;">تفاصيل إضافية:</label>
                 <textarea id="reportDetails" rows="3" placeholder="اكتب تفاصيل مختصرة للموقف..." style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #ccc; margin-bottom: 20px; font-family: 'Tajawal';"></textarea>
 
-                <!-- زر الإرسال -->
                 <button type="submit" id="submitBtn" style="width: 100%; padding: 15px; background: #c0392b; color: white; border: none; border-radius: 10px; font-size: 1.1rem; font-weight: bold; font-family: 'Tajawal'; cursor: pointer;">🚨 إرسال البلاغ فوراً</button>
             </form>
         </main>
     </div>
 
-    <!-- مكتبات Firebase والربط المباشر -->
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+    <!-- Firebase Setup -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+        import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyD9aVz8DTHIUaWSp2JMPOSTUH5f6TqjDcg",
+            authDomain: "qarar-20d04.firebaseapp.com",
+            databaseURL: "https://qarar-20d04-default-rtdb.europe-west1.firebasedatabase.app",
+            projectId: "qarar-20d04",
+            storageBucket: "qarar-20d04.firebasestorage.app",
+            messagingSenderId: "698538320361",
+            appId: "1:698538320361:web:fa4191ad23d9e6e7362b78"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        // جعل الدوال متاحة عالمياً لاستخدامها في report-sender.js
+        window.firebase = { db, ref, push };
+    </script>
     <script src="./report-sender.js"></script>
 </body>
 </html>
