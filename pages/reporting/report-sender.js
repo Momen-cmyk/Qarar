@@ -21,8 +21,6 @@ function getLocation() {
     }
 }
 
-const channel = new BroadcastChannel('qarar_reports_channel');
-
 document.addEventListener('DOMContentLoaded', function() {
     const form = document.getElementById('liveReportForm');
     if (form) {
@@ -42,16 +40,28 @@ document.addEventListener('DOMContentLoaded', function() {
                     details: document.getElementById('reportDetails').value || "لا توجد تفاصيل إضافية",
                     time: new Date().toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit' }),
                     date: new Date().toISOString().split('T')[0],
+                    timestamp: Date.now(),
                     status: "جديد 🔴",
-                    image: imageData
+                    image: imageData,
+                    read: false
                 };
 
+                // الحفظ في Firebase (أونلاين)
+                if (window.firebase && window.firebase.db) {
+                    const { db, ref, push } = window.firebase;
+                    push(ref(db, 'reports'), reportData)
+                        .then(() => {
+                            console.log("✅ تم الإرسال إلى Firebase بنجاح");
+                        })
+                        .catch((error) => {
+                            console.error("❌ خطأ في الإرسال:", error);
+                        });
+                }
+
+                // الحفظ المحلي كاحتياطي
                 let currentReports = JSON.parse(localStorage.getItem('qarar_reports') || '[]');
                 currentReports.unshift(reportData);
                 localStorage.setItem('qarar_reports', JSON.stringify(currentReports));
-
-                // إرسال الإشارة المباشرة للوحة التحكم (تحدث الجدول فوراً)
-                channel.postMessage(reportData);
 
                 setTimeout(() => {
                     alert("🚨 تم إرسال البلاغ بنجاح! وظهر فوراً في لوحة تحكم الطوارئ.");
@@ -61,7 +71,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 }, 300);
             };
 
-            // قراءة الصورة لو اتصورت
             if (fileInput && fileInput.files && fileInput.files[0]) {
                 const reader = new FileReader();
                 reader.onload = function(e) {
